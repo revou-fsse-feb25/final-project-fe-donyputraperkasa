@@ -42,9 +42,9 @@ export default function LoginPage() {
 
         localStorage.setItem("userName", "User"); // Simpan nama
         if (email === "john@mail.com") {
-            router.push("/dashboard/admin");
+            router.push("/coba-dashboard/admin");
         } else {
-            router.push("/dashboard/user");
+            router.push("/coba-dashboard/user");
         }
     }
 
