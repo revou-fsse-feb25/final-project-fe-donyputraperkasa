@@ -1,11 +1,8 @@
 export default function Footer() {
     return (
-        <footer className="bg-black text-white py-8 mt-12 w-full border-t border-white/20">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col items-center text-center gap-4">
-            <div className="text-sm space-y-1">
-            <p>&copy; {new Date().getFullYear()} <span className="font-semibold">Bimbel Matematika</span>. All rights reserved.</p>
-            <p className="text-white/70">Developer: Dony Putra Perkasa</p>
-            </div>
+        <footer className="w-full py-4 text-center text-sm bg-white border-t border-gray-200 text-gray-600 shadow-inner">
+        <div className="container mx-auto">
+            Developed by <strong className="text-purple-700">Dony Putra Perkasa</strong> &copy; {new Date().getFullYear()}
         </div>
         </footer>
     );
