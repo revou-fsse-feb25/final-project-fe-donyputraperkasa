@@ -13,13 +13,19 @@ export default function AdminPage() {
                 href="/admin/edit-course"
                 className="block px-6 py-4 bg-white text-blue-800 font-semibold rounded shadow-md hover:bg-blue-50 transition"
                 >
-                Edit Kursus
+                Edit Kelas
                 </Link>
                 <Link
                 href="/admin/edit-lecture"
                 className="block px-6 py-4 bg-white text-blue-800 font-semibold rounded shadow-md hover:bg-blue-50 transition"
                 >
-                Tambah Tentor
+                Edit Lecture
+                </Link>
+                                <Link
+                href="/admin/edit-announcement"
+                className="block px-6 py-4 bg-white text-blue-800 font-semibold rounded shadow-md hover:bg-blue-50 transition"
+                >
+                Edit Announcement
                 </Link>
                 <Link
                 href="/admin/edit-student"

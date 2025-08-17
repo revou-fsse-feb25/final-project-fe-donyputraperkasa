@@ -25,8 +25,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     <h2 className="text-xl font-bold mb-6">Dashboard Admin</h2>
                     <nav className="flex flex-col gap-2 text-lg">
                         <Link href="/admin" className='text-purple-500 hover:text-purple-700 p-2'>Dashboard</Link>
-                        <Link href="/admin/edit-course" className='text-purple-500 hover:text-purple-700 p-2'>Edit Kursus</Link>
-                        <Link href="/admin/edit-lecture" className='text-purple-500 hover:text-purple-700 p-2'>Tambah Tentor</Link>
+                        <Link href="/admin/edit-course" className='text-purple-500 hover:text-purple-700 p-2'>Edit Kelas</Link>
+                        <Link href="/admin/edit-lecture" className='text-purple-500 hover:text-purple-700 p-2'>Edit Lecture</Link>
+                        <Link href="/admin/edit-announcement" className='text-purple-500 hover:text-purple-700 p-2'>Edit Announcement</Link>
                         <Link href="/admin/edit-student" className='text-purple-500 hover:text-purple-700 p-2'>Daftar Siswa</Link>
                         <button onClick={handleLogout} className="text-left text-red-600 hover:underline">Keluar</button>
                     </nav>
