@@ -26,7 +26,7 @@ export default function Navbar() {
 
                 {/* Desktop menu */}
                 <div className="hidden md:flex items-center space-x-4">
-                    <Link href="/dashboard" className="hover:underline">Dashboard</Link>
+                    <Link href="/student" className="hover:underline">Student</Link>
                     <Link href="/admin" className="hover:underline">Admin</Link>
                     <Link href="/login" className="px-4 py-2 rounded bg-white text-purple-700 font-semibold hover:bg-gray-100">Masuk</Link>
                     <Link href="/register" className="px-4 py-2 rounded border border-purple-500 text-purple-600 hover:bg-blue-50">Daftar</Link>
@@ -36,7 +36,7 @@ export default function Navbar() {
             {/* Mobile menu */}
             {isOpen && (
                 <div className="md:hidden mt-4 flex flex-col items-center space-y-2">
-                    <Link href="/dashboard" className="hover:underline">Dashboard</Link>
+                    <Link href="/student" className="hover:underline">Student</Link>
                     <Link href="/admin" className="hover:underline">Admin</Link>
                     <Link href="/login" className="px-4 py-2 rounded bg-white text-purple-700 font-semibold hover:bg-gray-100 w-fit">Masuk</Link>
                     <Link href="/register" className="px-4 py-2 rounded border border-purple-500 text-purple-600 hover:bg-blue-50 w-fit">Daftar</Link>

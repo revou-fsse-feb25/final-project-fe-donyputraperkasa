@@ -7,7 +7,7 @@ export default function DashboardPage() {
     return (
         <div className="flex flex-col min-h-screen">
             <main className="flex-1 p-8 bg-white/50 text-gray-800">
-                <h1 className="text-3xl font-bold mb-4">Dashboard</h1>
+                <h1 className="text-3xl font-bold mb-4">Student</h1>
                 <p className="mb-6">Selamat datang kembali! Akses materi dan kelola akunmu dari sini.</p>
 
                 <div className="grid gap-4 sm:grid-cols-2">

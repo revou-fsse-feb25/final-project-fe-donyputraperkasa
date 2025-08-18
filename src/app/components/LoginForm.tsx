@@ -22,7 +22,7 @@ export default function LoginForm({ onClose }: LoginFormProps) {
     return (
         <form
         onSubmit={handleSubmit}
-        className="bg-white/10 p-8 rounded-lg shadow-md w-full max-w-md space-y-4 text-white"
+        className="bg-white/10 p-8 rounded-lg w-full max-w-md space-y-4 text-white"
         >
         <h1 className="text-2xl font-bold mb-2">Masuk Akun</h1>
         <input
@@ -32,7 +32,7 @@ export default function LoginForm({ onClose }: LoginFormProps) {
             onChange={handleChange}
             placeholder="Email"
             required
-            className="w-full p-2 rounded text-black"
+            className="w-full p-2 rounded text-black border border-gray-500"
         />
         <input
             type="password"
@@ -41,7 +41,7 @@ export default function LoginForm({ onClose }: LoginFormProps) {
             onChange={handleChange}
             placeholder="Kata Sandi"
             required
-            className="w-full p-2 rounded border-gray-300 text-black"
+            className="w-full p-2 rounded text-black border border-gray-500"
         />
         <button type="submit" className="w-full py-2 bg-emerald-500 rounded hover:bg-emerald-600 transition">
             Masuk

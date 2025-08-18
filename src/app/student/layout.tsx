@@ -22,10 +22,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <aside className={`w-full md:w-64 bg-white border-r shadow-md p-6 space-y-4 ${isOpen ? 'block' : 'hidden'} md:block`}>
                 <h2 className="text-xl font-bold mb-6">Selamat Datang</h2>
                 <nav className="flex flex-col gap-5 text-lg">
-                    <Link href="/dashboard" className="text-purple-500 hover:text-purple-700 p-2">Dashboard</Link>
-                    <Link href="/dashboard/courses" className="text-purple-500 hover:text-purple-700 p-2">Daftar Kelas</Link>
-                    <Link href="/dashboard/my-courses" className="text-purple-500 hover:text-purple-700 p-2">Kelas Saya</Link>
-                    <Link href="/dashboard/profile" className="text-purple-500 hover:text-purple-700 p-2">Profil</Link>
+                    <Link href="/student" className="text-purple-500 hover:text-purple-700 p-2">Student</Link>
+                    <Link href="/student/courses" className="text-purple-500 hover:text-purple-700 p-2">Daftar Kelas</Link>
+                    <Link href="/student/my-courses" className="text-purple-500 hover:text-purple-700 p-2">Kelas Saya</Link>
+                    <Link href="/student/profile" className="text-purple-500 hover:text-purple-700 p-2">Profil</Link>
                     <button onClick={handleLogout} className="text-left text-red-600 hover:underline">Keluar</button>
                 </nav>
             </aside>
