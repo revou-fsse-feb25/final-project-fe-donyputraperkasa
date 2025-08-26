@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { register } from '@/app/lib/api';
+import { useRouter } from 'next/navigation';
 
 type RegisterFormProps = {
     onClose?: () => void;
@@ -14,14 +16,35 @@ export default function RegisterForm({ onClose }: RegisterFormProps) {
         whatsapp: '',
         schoolLevel: '',
     });
+    const [loading, setLoading] = useState(false);
+    const router = useRouter();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('Register:', form);
+        setLoading(true);
+        try {
+            const res = await register({
+                name: form.name,
+                email: form.email,
+                password: form.password,
+                whatsapp: form.whatsapp,
+                schoolLevel: form.schoolLevel,
+            });
+            if (res && res.access_token) {
+                localStorage.setItem('token', res.access_token);
+                router.push('/student');
+            } else {
+                alert('Registrasi gagal. Silakan cek data Anda.');
+            }
+        } catch (error) {
+            alert('Registrasi gagal. Silakan cek data Anda.');
+        } finally {
+            setLoading(false);
+        }
         if (onClose) onClose();
     };
 
@@ -79,8 +102,8 @@ export default function RegisterForm({ onClose }: RegisterFormProps) {
             <option value="SMP">SMP</option>
             <option value="SMA">SMA</option>
         </select>
-        <button type="submit" className="w-full py-2 bg-emerald-500 rounded hover:bg-emerald-600 transition">
-            Daftar
+        <button type="submit" disabled={loading} className="w-full py-2 bg-emerald-500 rounded hover:bg-emerald-600 transition">
+            {loading ? "Memproses..." : "Daftar"}
         </button>
         </form>
     );

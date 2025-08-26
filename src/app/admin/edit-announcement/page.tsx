@@ -19,34 +19,74 @@ export default function EditAnnouncementPage() {
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [editingId, setEditingId] = useState<string | null>(null);
 
-    useEffect(() => {
-        setAnnouncements([]);
-    }, []);
+useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/announcements`);
+            const data = await res.json();
+            console.log("Announcements response:", data);
+            if (Array.isArray(data)) {
+                setAnnouncements(data);
+            } else if (data && Array.isArray(data.announcements)) {
+                setAnnouncements(data.announcements);
+            } else {
+                setAnnouncements([]);
+            }
+        } catch (error) {
+            console.error("Error fetching announcements", error);
+        }
+    };
+    fetchData();
+}, []);
 
-    function handleSubmit(e: React.FormEvent) {
+    async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
 
+        const token = localStorage.getItem('token');
+        const headers = {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        };
+
         if (editingId) {
-            setAnnouncements((prev) =>
-                prev.map((a) =>
-                    a.id === editingId ? { ...a, title, content, imageUrl: imagePreview || a.imageUrl } : a
-                )
-            );
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/announcements/${editingId}`, {
+                method: 'PUT',
+                headers,
+                body: JSON.stringify({ title, content }),
+            });
         } else {
-            const newAnnouncement: Announcement = {
-                id: crypto.randomUUID(),
-                title,
-                content,
-                imageUrl: imagePreview || undefined,
-                createdAt: new Date().toISOString(),
-            };
-            setAnnouncements((prev) => [...prev, newAnnouncement]);
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/announcements`, {
+                method: 'POST',
+                headers,
+                body: JSON.stringify({ title, content }),
+            });
         }
         resetForm();
+        refreshAnnouncements();
     }
 
-    function handleDelete(id: string) {
-        setAnnouncements((prev) => prev.filter((a) => a.id !== id));
+    async function refreshAnnouncements() {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/announcements`);
+        const data = await res.json();
+        console.log("Announcements response:", data);
+        if (Array.isArray(data)) {
+            setAnnouncements(data);
+        } else if (data && Array.isArray(data.announcements)) {
+            setAnnouncements(data.announcements);
+        } else {
+            setAnnouncements([]);
+        }
+    }
+
+    async function handleDelete(id: string) {
+        const token = localStorage.getItem('token');
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/announcements/${id}`, {
+            method: 'DELETE',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        refreshAnnouncements();
     }
 
     function handleEdit(a: Announcement) {

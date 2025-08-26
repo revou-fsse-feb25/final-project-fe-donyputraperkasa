@@ -24,6 +24,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <nav className="flex flex-col gap-5 text-lg">
                     <Link href="/student" className="text-purple-500 hover:text-purple-700 p-2">Student</Link>
                     <Link href="/student/courses" className="text-purple-500 hover:text-purple-700 p-2">Daftar Kelas</Link>
+                    <Link href="/student/announcement" className="text-purple-500 hover:text-purple-700 p-2">Pengumuman</Link>
                     <Link href="/student/my-courses" className="text-purple-500 hover:text-purple-700 p-2">Kelas Saya</Link>
                     <Link href="/student/profile" className="text-purple-500 hover:text-purple-700 p-2">Profil</Link>
                     <button onClick={handleLogout} className="text-left text-red-600 hover:underline">Keluar</button>

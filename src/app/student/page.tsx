@@ -12,7 +12,7 @@ export default function DashboardPage() {
 
                 <div className="grid gap-4 sm:grid-cols-2">
                     <Link
-                    href="/dashboard/my-courses"
+                    href="/student/my-courses"
                     className="block p-6 bg-blue-100 hover:bg-blue-200 rounded-lg shadow transition"
                     >
                     <h2 className="text-xl font-semibold mb-2">Kursus Saya</h2>
@@ -20,7 +20,15 @@ export default function DashboardPage() {
                     </Link>
 
                     <Link
-                    href="/dashboard/profile"
+                    href="/student/announcement"
+                    className="block p-6 bg-orange-100 hover:bg-orange-200 rounded-lg shadow transition"
+                    >
+                    <h2 className="text-xl font-semibold mb-2">Pengumuman</h2>
+                    <p>Periksa pengumuman terbaru dan informasi penting.</p>
+                    </Link>
+
+                    <Link
+                    href="/student/profile"
                     className="block p-6 bg-emerald-100 hover:bg-emerald-200 rounded-lg shadow transition"
                     >
                     <h2 className="text-xl font-semibold mb-2">Profil</h2>
@@ -28,7 +36,7 @@ export default function DashboardPage() {
                     </Link>
 
                     <Link
-                        href="/dashboard/courses"
+                        href="/student/courses"
                         className="block p-6 bg-indigo-100 hover:bg-indigo-200 rounded-lg shadow transition"
                     >
                         <h2 className="text-xl font-semibold mb-2">Lihat Kursus</h2>

@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export default function EditCoursePage() {
     const [form, setForm] = useState({
@@ -9,36 +10,75 @@ export default function EditCoursePage() {
         tentor: '',
         price: '',
     });
-    // Manage a list of courses
-    const [courses, setCourses] = useState<typeof form[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [editingId, setEditingId] = useState<number | null>(null);
+    const [courses, setCourses] = useState<(typeof form & { id: number })[]>([]);
+
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/';
+
+    useEffect(() => {
+        const token = localStorage.getItem('access_token');
+        axios.get(`${API_URL}/lessons`, {
+            headers: { Authorization: `Bearer ${token}` }
+        })
+        .then(res => setCourses(res.data))
+        .catch(err => console.error(err))
+        .finally(() => setLoading(false));
+    }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    // Handler to delete a course from the list by index
-    const handleDelete = (index: number) => {
-        setCourses((prev) => prev.filter((_, idx) => idx !== index));
+    const handleDelete = async (id: number) => {
+        try {
+            const token = localStorage.getItem('access_token');
+            await axios.delete(`${API_URL}/lessons/${id}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            setCourses(prev => prev.filter(course => course.id !== id));
+        } catch (error) {
+            console.error(error);
+            alert('Gagal menghapus kursus');
+        }
     };
 
-    // Handler to edit a course: load it into form and remove from list
-    const handleEdit = (index: number) => {
-        setForm(courses[index]);
-        setCourses((prev) => prev.filter((_, idx) => idx !== index));
-    };
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        // Add the new course to the courses array
-        setCourses((prev) => [...prev, form]);
+    const handleEdit = (course: typeof form & { id: number }) => {
         setForm({
-            title: '',
-            schedule: '',
-            tentor: '',
-            price: '',
+            title: course.title,
+            schedule: course.schedule,
+            tentor: course.tentor,
+            price: course.price
         });
-        // TODO: Kirim ke backend
+        setEditingId(course.id);
     };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        const token = localStorage.getItem('access_token');
+        try {
+            if (editingId) {
+                const res = await axios.put(`${API_URL}/lessons/${editingId}`, form, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                setCourses(prev => prev.map(course => course.id === editingId ? res.data : course));
+                setEditingId(null);
+            } else {
+                const res = await axios.post(`${API_URL}/lessons`, form, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                setCourses(prev => [...prev, res.data]);
+            }
+            setForm({ title: '', schedule: '', tentor: '', price: '' });
+        } catch (error) {
+            console.error(error);
+            alert('Gagal menyimpan kursus');
+        }
+    };
+
+    if (loading) {
+        return <div className="flex justify-center items-center h-screen"><p>Loading...</p></div>;
+    }
 
     return (
         <main className="min-h-screen p-8 text-gray-800 bg-gradient-to-br from-indigo-100 via-sky-100 to-blue-100">
@@ -124,8 +164,8 @@ export default function EditCoursePage() {
                     <section className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
                         <h2 className="text-xl font-semibold mb-2">Daftar Kelas yang Ditambahkan:</h2>
                         <ul className="space-y-4">
-                            {courses.map((course, idx) => (
-                                <li key={idx} className="p-4 bg-green-100 rounded flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                            {courses.map((course) => (
+                                <li key={course.id} className="p-4 bg-green-100 rounded flex flex-col sm:flex-row sm:items-center sm:justify-between">
                                     <div>
                                         <p><strong>Judul:</strong> {course.title}</p>
                                         <p><strong>Jadwal:</strong> {course.schedule}</p>
@@ -135,14 +175,14 @@ export default function EditCoursePage() {
                                     <div className="mt-2 sm:mt-0 flex gap-2">
                                         <button
                                             className="px-3 py-1 bg-yellow-400 text-white rounded hover:bg-yellow-500 transition font-semibold"
-                                            onClick={() => handleEdit(idx)}
+                                            onClick={() => handleEdit(course)}
                                             type="button"
                                         >
                                             Edit
                                         </button>
                                         <button
                                             className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition font-semibold"
-                                            onClick={() => handleDelete(idx)}
+                                            onClick={() => handleDelete(course.id)}
                                             type="button"
                                         >
                                             Hapus
