@@ -25,6 +25,7 @@ useEffect(() => {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/announcements`);
             const data = await res.json();
             console.log("Announcements response:", data);
+            console.log("Fetching announcements from:", `${process.env.NEXT_PUBLIC_API_URL}/announcements`);
             if (Array.isArray(data)) {
                 setAnnouncements(data);
             } else if (data && Array.isArray(data.announcements)) {
@@ -69,6 +70,7 @@ useEffect(() => {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/announcements`);
         const data = await res.json();
         console.log("Announcements response:", data);
+        // console.log("Fetching announcements from:", `${process.env.NEXT_PUBLIC_API_URL}/announcements`);
         if (Array.isArray(data)) {
             setAnnouncements(data);
         } else if (data && Array.isArray(data.announcements)) {
